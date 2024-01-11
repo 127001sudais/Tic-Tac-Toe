@@ -1,70 +1,34 @@
-# Getting Started with Create React App
+### High-Level Overview of Tic-Tac-Toe React App Technical Assignment
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+#### Core Functionalities:
 
-## Available Scripts
+1. **State Persistence**:
+   - Implement local storage in the browser to maintain the game state even after a web app refresh.
+   - Ensure state management is robust enough to recover the exact game state during the app lifecycle.
 
-In the project directory, you can run:
+2. **Testing**:
+   - Develop unit tests for individual components and utility functions to validate their expected behaviors.
+   - Write end-to-end tests to simulate user interactions and game scenarios, ensuring the application works as intended from start to finish.
+   - Aim for reasonable test coverage, balancing time constraints with the critical paths and functionalities.
 
-### `npm start`
+3. **CI/CD Pipeline**:
+   - Set up Continuous Integration (CI) using GitHub Actions to automatically run unit and end-to-end tests on every push or pull request.
+   - Configure Continuous Deployment (CD) to deploy the application to GitHub Pages upon successful merge into the main branch.
+   - Include pipeline status badges in the README for visibility.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+4. **Version Control and Sharing**:
+   - Maintain clear version control with meaningful commit messages and a well-organized repository structure.
+   - Ensure the GitHub repository is public, with proper documentation in the README.md for setup, testing, and deployment instructions.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+#### Optional Enhancements:
 
-### `npm test`
+5. **Game Modes**:
+   - Incorporate a feature to allow users to choose between Player vs Player (PvP) or Player vs Computer (PvC) modes.(use MINIMAX algorithm for the PvC and PeerJS for PvP)
+   
+6. **Game History**:
+   - Design a system to log the outcomes of each game, including moves and winners.
+   - Provide a user interface to view the history of past games, possibly with the option to replay or review them.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### Deployment:
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- **GitHub Pages**: Ensure the app is properly configured for deployment on GitHub Pages, considering path issues and SPA routing.
