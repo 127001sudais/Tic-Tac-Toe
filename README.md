@@ -3,8 +3,8 @@
 #### Core Functionalities:
 
 1. **State Persistence**:
-   - Implement local storage in the browser to maintain the game state even after a web app refresh.
-   - Ensure state management is robust enough to recover the exact game state during the app lifecycle.
+   - Implement local storage in the browser to maintain the game state even after a web app refresh. ✅
+   - Ensure state management is robust enough to recover the exact game state during the app lifecycle. ✅
 
 2. **Testing**:
    - Develop unit tests for individual components and utility functions to validate their expected behaviors.
@@ -23,7 +23,9 @@
 #### Optional Enhancements:
 
 5. **Game Modes**:
-   - Incorporate a feature to allow users to choose between Player vs Player (PvP) or Player vs Computer (PvC) modes.(use MINIMAX algorithm for the PvC and PeerJS for PvP)
+   (use MINIMAX algorithm for the PvC and PeerJS for PvP)
+   - Incorporate a feature to allow users to choose between Player vs Player (PvP) or
+   -  Player vs Computer (PvC) modes. ✅
    
 6. **Game History**:
    - Design a system to log the outcomes of each game, including moves and winners.
