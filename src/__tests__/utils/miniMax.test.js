@@ -6,7 +6,6 @@ import {
   TIE,
 } from "../../constants/initialBoard";
 
-// Mock the checkForWinner function to control its output during tests
 jest.mock("../../constants/initialBoard", () => ({
   ...jest.requireActual("../../constants/initialBoard"),
   checkForWinner: jest.fn(),

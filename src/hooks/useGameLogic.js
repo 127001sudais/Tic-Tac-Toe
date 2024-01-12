@@ -1,11 +1,5 @@
-import {
-  initialBoard,
-  PLAYER_AI,
-  PLAYER_HUMAN,
-  TIE,
-} from "../constants/initialBoard";
+import { TIE } from "../constants/initialBoard";
 
-// Check for a winner or a tie
 export const checkForWinner = (squares) => {
   const winningCombinations = [
     [0, 1, 2],
