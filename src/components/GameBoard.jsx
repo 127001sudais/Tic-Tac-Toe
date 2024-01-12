@@ -5,8 +5,9 @@ import {
   TIE,
   initialBoard,
 } from "../constants/initialBoard";
-import { checkForWinner, minimax } from "../hooks/useGameLogic";
+import { checkForWinner } from "../hooks/useGameLogic";
 import { useLocalStorage } from "../hooks/useLocalStorage";
+import { minimax } from "../utils/miniMax";
 
 const TicTacToe = () => {
   const [board, setBoard] = useLocalStorage("board", initialBoard);
