@@ -34,6 +34,9 @@ const TicTacToe = () => {
     }
   }, [board, isHumanNext, winner, handleClick]);
 
+  /**
+   *
+   */
   const getStatusMessage = useMemo(() => {
     if (winner) {
       return winner === TIE ? "It's a tie!" : `Winner: ${winner}`;
