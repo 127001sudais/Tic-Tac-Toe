@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { getFriendlyErrorMessage } from "../utils/peerConnection";
 import {
   initializePeer,
   connectToPeer,
   closePeerConnection,
+  getFriendlyErrorMessage,
 } from "../utils/peerConnection";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-regular-svg-icons";
@@ -46,6 +46,7 @@ const Lobby = () => {
       friendPeerId,
       (conn) => {
         setConnectionStatus(`Connected to ${conn.peer}`);
+        console.log("connected");
       },
       (err) => {
         // Use the getFriendlyErrorMessage function to set a user-friendly error message

@@ -9,3 +9,7 @@
 7. Both users will be able to play the game.
 8. The users can play as many games as they want until they leave the lobby.
  
+
+ ## example:
+    user A shared the id, user B entered the id and clicked on the "Join" button.
+    Both users will be redirected to the game, if the connection is successful. (The game component will be rendered in place of lobby component)
