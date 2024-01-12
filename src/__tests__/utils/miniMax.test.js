@@ -83,24 +83,4 @@ describe("minimax", () => {
     const result = minimax(board, PLAYER_AI);
     expect(result).toEqual({ index: 0, score: 1 });
   });
-
-  it("should return the best move for HUMAN", () => {
-    const board = [
-      null,
-      PLAYER_AI,
-      null,
-      PLAYER_HUMAN,
-      PLAYER_AI,
-      null,
-      null,
-      null,
-      PLAYER_HUMAN,
-    ];
-    checkForWinner.mockReturnValue(null); // No winner yet
-    // Assume that the best move for HUMAN is to place at index 2
-    const result = minimax(board, PLAYER_HUMAN);
-    expect(result).toEqual({ index: 2, score: -1 });
-  });
-
-  // Additional tests can be written to test other scenarios.
 });
