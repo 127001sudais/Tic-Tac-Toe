@@ -1,3 +1,4 @@
+// ⚠️⚠️⚠️ Note: This code is not being used.
 import React, { useState, useEffect } from "react";
 import { checkForWinner } from "../hooks/useGameLogic";
 

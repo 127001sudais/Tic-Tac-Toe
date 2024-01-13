@@ -1,12 +1,12 @@
 import { useState } from "react";
 import "./App.css";
 import GameBoard from "./components/GameBoard";
-import Lobby from "./components/Lobby";
+import MLobby from "./components/Lobby/Lobby";
 import { motion, AnimatePresence } from "framer-motion";
 
 const tabs = [
   { component: <GameBoard />, label: "SinglePlayer", icon: "🎮" },
-  { component: <Lobby />, label: "MultiPlayer", icon: "👥" },
+  { component: <MLobby />, label: "MultiPlayer", icon: "👥" },
 ];
 
 export default function App() {

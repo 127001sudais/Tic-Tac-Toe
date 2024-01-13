@@ -1,17 +1,14 @@
-// ⚠️⚠️⚠️ Note: This code is not being used.
-
 import React, { useEffect, useState } from "react";
-import Multiplayer from "./Multiplayer";
+import Multiplayer from "../Multiplayer/Multiplayer";
+import LobbyUI from "./LobbyUI";
 import {
   initializePeer,
   connectToPeer,
   closePeerConnection,
   getFriendlyErrorMessage,
-} from "../utils/peerConnection";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCopy } from "@fortawesome/free-regular-svg-icons";
+} from "../../utils/peerConnection";
 
-const Lobby = () => {
+const MLobby = () => {
   const [peerId, setPeerId] = useState("");
   const [friendPeerId, setFriendPeerId] = useState("");
   const [error, setError] = useState("");
@@ -37,7 +34,7 @@ const Lobby = () => {
       }
     );
 
-    return () => closePeerConnection();
+    return () => closePeerConnection(peerInstance);
   }, []);
 
   const handleConnectToPeer = () => {
@@ -72,43 +69,15 @@ const Lobby = () => {
   return inGame ? (
     <Multiplayer conn={conn} />
   ) : (
-    <div className="flex flex-col justify-center items-center">
-      <div className="flex bg-gray-400 p-2 m-2 rounded-lg text-white">
-        <p className="flex-1">Your ID: {peerId}</p>
-        <button
-          className="pl-2 hover:text-black"
-          onClick={() => navigator.clipboard.writeText(peerId)}
-        >
-          <FontAwesomeIcon icon={faCopy} />
-        </button>
-      </div>
-
-      <input
-        className="border-2 rounded-lg p-2 m-2 border-black"
-        type="text"
-        value={friendPeerId}
-        onChange={(e) => setFriendPeerId(e.target.value)}
-        placeholder="Friend's Peer ID"
-      />
-
-      <button
-        className="bg-green-400 hover:bg-green-600 p-2 m-2 rounded-lg text-white"
-        onClick={handleConnectToPeer}
-      >
-        Connect
-      </button>
-
-      {error && (
-        <p className="bg-red-500 p-2 m-2 rounded-lg text-white">
-          Error: {error}
-        </p>
-      )}
-
-      <p className="bg-cyan-300 p-2 m-2 rounded-lg text-white">
-        {connectionStatus}
-      </p>
-    </div>
+    <LobbyUI
+      peerId={peerId}
+      friendPeerId={friendPeerId}
+      setFriendPeerId={setFriendPeerId}
+      handleConnectToPeer={handleConnectToPeer}
+      error={error}
+      connectionStatus={connectionStatus}
+    />
   );
 };
 
-export default Lobby;
+export default MLobby;
