@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Multiplayer from "./Multiplayer";
 import {
   initializePeer,
   connectToPeer,
@@ -13,69 +14,58 @@ const Lobby = () => {
   const [friendPeerId, setFriendPeerId] = useState("");
   const [error, setError] = useState("");
   const [connectionStatus, setConnectionStatus] = useState("");
+  const [inGame, setInGame] = useState(false);
 
   useEffect(() => {
     const peerInstance = initializePeer(
-      (id) => {
-        setPeerId(id);
-      },
+      (id) => setPeerId(id),
       (conn) => {
         console.log("Incoming connection", conn);
         setConnectionStatus(`Connected to ${conn.peer}`);
       },
       (err) => {
         console.error("Peer error", err);
-        setError(err.message);
+        setError(getFriendlyErrorMessage(err));
       }
     );
 
-    return () => {
-      closePeerConnection();
-    };
+    return () => closePeerConnection();
   }, []);
 
   const handleConnectToPeer = () => {
-    setError(""); // Clear previous errors
-
-    if (!friendPeerId) {
-      setError("Please enter your friend's peer ID.");
-      return;
-    }
+    setError("");
 
     const connection = connectToPeer(
       friendPeerId,
       (conn) => {
         setConnectionStatus(`Connected to ${conn.peer}`);
-        console.log("connected");
+        console.log("Connected to peer:", conn.peer);
+        setInGame(true);
       },
-      (err) => {
-        // Use the getFriendlyErrorMessage function to set a user-friendly error message
-        setError(getFriendlyErrorMessage(err));
-      }
+      (err) => setError(getFriendlyErrorMessage(err))
     );
 
     if (connection) {
-      connection.on("data", (data) => {
-        // Handle received data
-        console.log("Received", data);
-      });
-
-      connection.on("close", () => {
-        setError("The peer has disconnected.");
-        setConnectionStatus("");
-      });
-
-      connection.on("error", (err) => {
-        setError("An error occurred during the connection.");
-        console.error(err);
-      });
+      connection
+        .on("data", (data) => console.log("Received", data))
+        .on("close", () => {
+          setError("The peer has disconnected.");
+          setConnectionStatus("");
+          setInGame(false);
+        })
+        .on("error", (err) => {
+          setError(getFriendlyErrorMessage(err));
+          console.error(err);
+        });
     }
   };
 
-  return (
-    <div className="flex flex-col justify-center items-center ">
+  return inGame ? (
+    <Multiplayer />
+  ) : (
+    <div className="flex flex-col justify-center items-center">
       <div className="flex bg-gray-400 p-2 m-2 rounded-lg text-white">
-        <p className="flex-1">Your ID:{peerId}</p>
+        <p className="flex-1">Your ID: {peerId}</p>
         <button
           className="pl-2 hover:text-black"
           onClick={() => navigator.clipboard.writeText(peerId)}
@@ -85,7 +75,7 @@ const Lobby = () => {
       </div>
 
       <input
-        className=" border-2 rounded-lg p-2 m-2 border-black"
+        className="border-2 rounded-lg p-2 m-2 border-black"
         type="text"
         value={friendPeerId}
         onChange={(e) => setFriendPeerId(e.target.value)}
