@@ -59,7 +59,7 @@ const TicTacToe = () => {
           {board.map((value, index) => (
             <button
               key={index}
-              className="border-4 border-red-500 hover:bg-gray-300 h-[90px] w-[90px] rounded-lg m-2 text-3xl"
+              className="border-4 border-red-500 hover:bg-gray-300 h-[90px] w-[90px] rounded-lg m-2 text-3xl font-semibold"
               onClick={() => handleClick(index)}
             >
               {value}

@@ -6,42 +6,19 @@ const Multiplayer = ({ conn }) => {
   const [board, setBoard] = useState(Array(9).fill(null));
   const [isXNext, setIsXNext] = useState(true);
   const [gameOver, setGameOver] = useState(false);
-
-  const makeMove = (position) => {
-    if (gameOver || board[position]) return;
-
-    const newBoard = board.slice();
-    newBoard[position] = isXNext ? "X" : "O";
-    setBoard(newBoard);
-    setIsXNext(!isXNext);
-
-    const result = checkForWinner(newBoard);
-    if (result) {
-      setGameOver(true);
-    }
-
-    if (conn) {
-      conn.send({ position, value: newBoard[position] });
-    }
-  };
-
-  const handleReceiveMove = (data) => {
-    const { position, value } = data;
-    const newBoard = board.slice();
-    newBoard[position] = value;
-    setBoard(newBoard);
-    setIsXNext(value !== "X");
-
-    const result = checkForWinner(newBoard);
-    if (result) {
-      setGameOver(true);
-    }
-  };
+  const [gameStatus, setGameStatus] = useState("Player X's turn");
 
   useEffect(() => {
+    const handleReceiveMove = (data) => {
+      const { position, value } = data;
+      if (board[position] === null && !gameOver) {
+        updateBoard(position, value);
+      }
+    };
+
     if (conn) {
       conn.on("data", handleReceiveMove);
-      conn.on("close", () => console.log("Connection has been closed"));
+      conn.on("close", () => console.log("Connection has been closed."));
     }
 
     return () => {
@@ -50,10 +27,46 @@ const Multiplayer = ({ conn }) => {
         conn.off("close");
       }
     };
-  }, [conn, board]);
+  }, [conn, board, gameOver]);
+
+  const updateGameStatus = (newBoard) => {
+    const winner = checkForWinner(newBoard);
+    if (winner) {
+      setGameOver(true);
+      setGameStatus(`Player ${winner} wins!`);
+    } else if (!newBoard.includes(null)) {
+      setGameOver(true);
+      setGameStatus("It's a draw!");
+    } else {
+      setGameStatus(`Player ${isXNext ? "O" : "X"}'s turn`);
+    }
+  };
+
+  const updateBoard = (position, value) => {
+    const newBoard = [...board];
+    newBoard[position] = value;
+    setBoard(newBoard);
+    setIsXNext(!isXNext);
+    updateGameStatus(newBoard);
+  };
+
+  const makeMove = (position) => {
+    if (board[position] || gameOver) return;
+    const nextValue = isXNext ? "X" : "O";
+    updateBoard(position, nextValue);
+
+    if (conn) {
+      conn.send({ position, value: nextValue });
+    }
+  };
 
   return (
-    <MultiplayerUI board={board} makeMove={makeMove} gameOver={gameOver} />
+    <MultiplayerUI
+      board={board}
+      makeMove={makeMove}
+      gameOver={gameOver}
+      gameStatus={gameStatus}
+    />
   );
 };
 
