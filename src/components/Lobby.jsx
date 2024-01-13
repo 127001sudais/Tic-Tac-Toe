@@ -15,6 +15,7 @@ const Lobby = () => {
   const [error, setError] = useState("");
   const [connectionStatus, setConnectionStatus] = useState("");
   const [inGame, setInGame] = useState(false);
+  const [conn, setConn] = useState(null);
 
   useEffect(() => {
     const peerInstance = initializePeer(
@@ -22,6 +23,11 @@ const Lobby = () => {
       (conn) => {
         console.log("Incoming connection", conn);
         setConnectionStatus(`Connected to ${conn.peer}`);
+        setInGame(true); // This line is added to transition the receiving user into the game
+        setConn(conn);
+        conn.on("data", (data) => {
+          // Handle the received data to update the game state
+        });
       },
       (err) => {
         console.error("Peer error", err);
@@ -41,6 +47,7 @@ const Lobby = () => {
         setConnectionStatus(`Connected to ${conn.peer}`);
         console.log("Connected to peer:", conn.peer);
         setInGame(true);
+        setConn(connection);
       },
       (err) => setError(getFriendlyErrorMessage(err))
     );
@@ -61,7 +68,7 @@ const Lobby = () => {
   };
 
   return inGame ? (
-    <Multiplayer />
+    <Multiplayer conn={conn} />
   ) : (
     <div className="flex flex-col justify-center items-center">
       <div className="flex bg-gray-400 p-2 m-2 rounded-lg text-white">
