@@ -12,7 +12,6 @@ const MLobby = () => {
   const [peerId, setPeerId] = useState("");
   const [friendPeerId, setFriendPeerId] = useState("");
   const [error, setError] = useState("");
-  const [connectionStatus, setConnectionStatus] = useState("");
   const [inGame, setInGame] = useState(false);
   const [conn, setConn] = useState(null);
 
@@ -21,7 +20,6 @@ const MLobby = () => {
       (id) => setPeerId(id),
       (conn) => {
         console.log("Incoming connection", conn);
-        setConnectionStatus(`Connected to ${conn.peer}`);
         setInGame(true); // This line is added to transition the receiving user into the game
         setConn(conn);
         conn.on("data", (data) => {
@@ -43,7 +41,6 @@ const MLobby = () => {
     const connection = connectToPeer(
       friendPeerId,
       (conn) => {
-        setConnectionStatus(`Connected to ${conn.peer}`);
         console.log("Connected to peer:", conn.peer);
         setInGame(true);
         setConn(connection);
@@ -56,7 +53,7 @@ const MLobby = () => {
         .on("data", (data) => console.log("Received", data))
         .on("close", () => {
           setError("The peer has disconnected.");
-          setConnectionStatus("");
+
           setInGame(false);
         })
         .on("error", (err) => {
@@ -75,7 +72,6 @@ const MLobby = () => {
       setFriendPeerId={setFriendPeerId}
       handleConnectToPeer={handleConnectToPeer}
       error={error}
-      connectionStatus={connectionStatus}
     />
   );
 };

@@ -34,9 +34,6 @@ const TicTacToe = () => {
     }
   }, [board, isHumanNext, winner, handleClick]);
 
-  /**
-   *
-   */
   const getStatusMessage = useMemo(() => {
     if (winner) {
       return winner === TIE ? "It's a tie!" : `Winner: ${winner}`;
@@ -59,7 +56,7 @@ const TicTacToe = () => {
           {board.map((value, index) => (
             <button
               key={index}
-              className="border-4 border-red-500 hover:bg-gray-300 h-[90px] w-[90px] rounded-lg m-2 text-3xl font-semibold"
+              className="border-4 border-cyan-500 hover:bg-gray-300 h-[90px] w-[90px] rounded-lg m-2 text-3xl font-bold"
               onClick={() => handleClick(index)}
             >
               {value}

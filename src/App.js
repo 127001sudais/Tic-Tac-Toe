@@ -1,12 +1,14 @@
 import { useState } from "react";
 import "./App.css";
-import GameBoard from "./components/GameBoard";
+// import GameBoard from "./components/GameBoard";
+import TicTacToe from "./components/Gameboard/GameboardUI";
 import MLobby from "./components/Lobby/Lobby";
 import { motion, AnimatePresence } from "framer-motion";
 
 const tabs = [
-  { component: <GameBoard />, label: "SinglePlayer", icon: "🎮" },
-  { component: <MLobby />, label: "MultiPlayer", icon: "👥" },
+  { component: <TicTacToe />, label: "AI(miniMAX)", icon: "🤖" },
+  // { component: <GameBoard />, label: "AI(miniMAX)", icon: "🤖" },
+  { component: <MLobby />, label: "MultiPlayer", icon: "🤼" },
 ];
 
 export default function App() {

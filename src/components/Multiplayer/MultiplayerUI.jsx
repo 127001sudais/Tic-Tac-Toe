@@ -10,7 +10,7 @@ const MultiplayerUI = ({
       {board.map((value, index) => (
         <div
           key={index}
-          className="border-2 border-green-500 m-2 p-2 w-[90px] h-[90px] rounded-lg flex items-center justify-center font-bold text-3xl"
+          className="border-4 border-green-500 m-2 p-2 w-[90px] h-[90px] rounded-lg flex items-center justify-center font-bold text-3xl"
           onClick={() => makeMove(index)}
         >
           {value}

@@ -1,6 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-regular-svg-icons";
+import { formatPeerId } from "../../utils/lobby";
 
 const LobbyUI = ({
   peerId,
@@ -8,11 +9,10 @@ const LobbyUI = ({
   setFriendPeerId,
   handleConnectToPeer,
   error,
-  connectionStatus,
 }) => (
   <div className="flex flex-col justify-center items-center">
     <div className="flex bg-gray-400 p-2 m-2 rounded-lg text-white">
-      <p className="flex-1">Your ID: {peerId}</p>
+      <p className="flex-1">Your ID: {formatPeerId(peerId)}</p>
       <button
         className="pl-2 hover:text-black"
         onClick={() => navigator.clipboard.writeText(peerId)}
@@ -37,12 +37,10 @@ const LobbyUI = ({
     </button>
 
     {error && (
-      <p className="bg-red-500 p-2 m-2 rounded-lg text-white">Error: {error}</p>
+      <p className="bg-red-500 p-2 m-2 rounded-lg text-white">
+        ⚠️⚠️💀💀 {error}
+      </p>
     )}
-
-    <p className="bg-cyan-300 p-2 m-2 rounded-lg text-white">
-      {connectionStatus}
-    </p>
   </div>
 );
 
