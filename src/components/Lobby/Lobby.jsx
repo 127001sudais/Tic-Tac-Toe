@@ -8,6 +8,9 @@ import {
   getFriendlyErrorMessage,
 } from "../../utils/peerConnection";
 
+/**
+ * MLobby component handles the lobby state and peer-to-peer connections.
+ */
 const MLobby = () => {
   const [peerId, setPeerId] = useState("");
   const [friendPeerId, setFriendPeerId] = useState("");
@@ -15,54 +18,68 @@ const MLobby = () => {
   const [inGame, setInGame] = useState(false);
   const [conn, setConn] = useState(null);
 
+  // Effect to initialize the peer connection when the component mounts
   useEffect(() => {
     const peerInstance = initializePeer(
-      (id) => setPeerId(id),
-      (conn) => {
-        console.log("Incoming connection", conn);
-        setInGame(true); // This line is added to transition the receiving user into the game
-        setConn(conn);
-        conn.on("data", (data) => {
-          // Handle the received data to update the game state
-        });
-      },
-      (err) => {
-        console.error("Peer error", err);
-        setError(getFriendlyErrorMessage(err));
-      }
+      setPeerId,
+      handleIncomingConnection,
+      handleError
     );
 
+    // Cleanup function to close the peer connection when the component unmounts
     return () => closePeerConnection(peerInstance);
   }, []);
 
+  // Handles incoming peer connections
+  const handleIncomingConnection = (connection) => {
+    console.log("Incoming connection", connection);
+    setInGame(true);
+    setConn(connection);
+    setupConnectionEventHandlers(connection);
+  };
+
+  // Sets up event handlers for a peer connection
+  const setupConnectionEventHandlers = (connection) => {
+    connection
+      .on("data", handleReceivedData)
+      .on("close", handleConnectionClose)
+      .on("error", handleError);
+  };
+
+  // Handles errors by logging and setting an error message
+  const handleError = (err) => {
+    console.error("Peer error", err);
+    setError(getFriendlyErrorMessage(err));
+  };
+
+  // ⚠️ Handles data received from a peer connection
+  const handleReceivedData = (data) => {
+    console.log("Received data", data);
+    // ⚠️ Handle the received data to update the game state
+  };
+
+  // Handles the event when a connection is closed
+  const handleConnectionClose = () => {
+    setError("The peer has disconnected.");
+    setInGame(false);
+  };
+
+  // Handles initiating a connection to a peer
   const handleConnectToPeer = () => {
     setError("");
-
     const connection = connectToPeer(
       friendPeerId,
-      (conn) => {
-        console.log("Connected to peer:", conn.peer);
-        setInGame(true);
-        setConn(connection);
-      },
-      (err) => setError(getFriendlyErrorMessage(err))
+      setupConnectionEventHandlers,
+      handleError
     );
 
     if (connection) {
-      connection
-        .on("data", (data) => console.log("Received", data))
-        .on("close", () => {
-          setError("The peer has disconnected.");
-
-          setInGame(false);
-        })
-        .on("error", (err) => {
-          setError(getFriendlyErrorMessage(err));
-          console.error(err);
-        });
+      setInGame(true);
+      setConn(connection);
     }
   };
 
+  // Render Multiplayer or LobbyUI based on the in-game state
   return inGame ? (
     <Multiplayer conn={conn} />
   ) : (
