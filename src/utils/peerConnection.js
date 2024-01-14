@@ -1,15 +1,31 @@
+/**
+ * PeerJS Wrapper Module
+ *
+ * This module provides simple functions to abstract the complexity of the PeerJS library.
+ */
+
 import Peer from "peerjs";
 
 let peer = null;
 
-// Function to safely execute callback if it's a function
+/**
+ * Executes a callback function safely if it's a function.
+ * @param {function} callback - The callback to execute.
+ * @param {...any} args - Arguments to pass to the callback.
+ */
 const safeExecute = (callback, ...args) => {
   if (typeof callback === "function") {
     callback(...args);
   }
 };
 
-// Function to initialize a peer connection
+/**
+ * Initializes a peer connection.
+ * @param {function} onOpen - Callback when the connection is opened.
+ * @param {function} onConnection - Callback when a connection is received.
+ * @param {function} onError - Callback when an error occurs.
+ * @returns The Peer instance.
+ */
 export const initializePeer = (onOpen, onConnection, onError) => {
   peer = new Peer();
 
@@ -20,19 +36,25 @@ export const initializePeer = (onOpen, onConnection, onError) => {
   return peer;
 };
 
-// Function to connect to a friend's peer, with error handling
+/**
+ * Connects to a friend's peer.
+ * @param {string} friendPeerId - The friend's peer ID.
+ * @param {function} onOpen - Callback when the connection is opened.
+ * @param {function} onError - Callback when an error occurs.
+ * @returns The connection object or null if there was an error.
+ */
 export const connectToPeer = (friendPeerId, onOpen, onError) => {
   if (!peer) {
     const error = new Error("Peer not initialized");
     console.error(error.message);
-    if (onError) onError(error);
+    safeExecute(onError, error);
     return null;
   }
 
   if (!friendPeerId) {
     const error = new Error("Friend's Peer ID is required");
     console.error(error.message);
-    if (onError) onError(error);
+    safeExecute(onError, error);
     return null;
   }
 
@@ -41,41 +63,42 @@ export const connectToPeer = (friendPeerId, onOpen, onError) => {
   try {
     connection = peer.connect(friendPeerId);
 
-    // Listen for successful connection
     connection.on("open", () => {
       console.log(`Connected to peer: ${friendPeerId}`);
-      if (onOpen) onOpen(connection);
+      safeExecute(onOpen, connection);
     });
 
-    // Listen for errors on the connection
     connection.on("error", (err) => {
       console.error("Connection failed", err);
-      if (onError) onError(err);
+      safeExecute(onError, err);
+    });
+
+    connection.on("close", () => {
+      console.log("Connection has been closed");
+      safeExecute(onError, new Error("Connection has been closed"));
     });
   } catch (error) {
     console.error("Failed to connect to peer:", error);
-    if (onError) onError(error);
-  }
-
-  // Handle disconnections
-  if (connection) {
-    connection.on("close", () => {
-      console.log("Connection has been closed");
-      if (onError) onError(new Error("Connection has been closed"));
-    });
+    safeExecute(onError, error);
   }
 
   return connection;
 };
 
-// Function to close the peer connection when no longer needed
+/**
+ * Closes the peer connection when it's no longer needed.
+ */
 export const closePeerConnection = () => {
   if (peer && !peer.destroyed) {
     peer.destroy();
   }
 };
 
-// Function to map error types to user-friendly messages
+/**
+ * Maps error types to user-friendly messages.
+ * @param {Error} error - The error object to map.
+ * @returns A user-friendly error message.
+ */
 export const getFriendlyErrorMessage = (error) => {
   switch (error.type) {
     case "peer-not-initialized":
