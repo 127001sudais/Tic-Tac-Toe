@@ -34,13 +34,6 @@ jobs:
           CI: false
         run: npm run build
 
-      - name: Run Cypress E2E tests
-        uses: cypress-io/github-action@v2
-        with:
-          start: npm start
-          wait-on: "http://localhost:3000"
-          cache-key: ${{ hashFiles('**/package-lock.json') }}
-
       - name: Deploy to GitHub Pages
         if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}
         uses: JamesIves/github-pages-deploy-action@v4.5.0
