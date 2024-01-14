@@ -8,8 +8,26 @@ const Multiplayer = ({ conn }) => {
   const [gameOver, setGameOver] = useState(false);
   const [gameStatus, setGameStatus] = useState("Player X's turn");
 
+  const resetGame = () => {
+    if (gameOver) {
+      setBoard(Array(9).fill(null));
+      setIsXNext(true);
+      setGameOver(false);
+      setGameStatus("Player X's turn");
+      if (conn) {
+        conn.send({ type: "reset" });
+      }
+      console.log("game resetted");
+    }
+  };
+
   useEffect(() => {
     const handleReceiveMove = (data) => {
+      if (data.type === "reset") {
+        resetGame();
+        return;
+      }
+
       const { position, value } = data;
       if (board[position] === null && !gameOver) {
         updateBoard(position, value);
@@ -66,6 +84,7 @@ const Multiplayer = ({ conn }) => {
       makeMove={makeMove}
       gameOver={gameOver}
       gameStatus={gameStatus}
+      resetGame={resetGame}
     />
   );
 };
