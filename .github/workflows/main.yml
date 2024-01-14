@@ -1,1 +1,49 @@
+name: React CI/CD
 
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18.18.0"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Cache Cypress binary
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/Cypress
+          key: ${{ runner.os }}-cypress-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-cypress-
+
+      - name: Build
+        run: npm run build
+
+      - name: Run Cypress E2E tests
+        uses: cypress-io/github-action@v2
+        with:
+          start: npm start
+          wait-on: "http://localhost:3000"
+          cache-key: ${{ hashFiles('**/package-lock.json') }}
+
+      # Add this step after your tests have passed to deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}
+        uses: JamesIves/github-pages-deploy-action@v4.5.0
+        with:
+          branch: gh-pages # The branch the action should deploy to.
+          folder: build # The folder the action should deploy.
+          token: ${{ secrets.GITHUB_TOKEN }} # GitHub automatically creates this secret to use in actions.
