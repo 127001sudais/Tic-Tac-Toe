@@ -6,34 +6,41 @@ const TicTacToe = () => {
   const { board, isHumanNext, winner, handleClick, restartGame } =
     useTicTacToeLogic();
 
+  // Memoized status message to avoid unnecessary recalculations.
   const getStatusMessage = useMemo(() => {
     if (winner) {
       return winner === TIE ? "It's a tie!" : `Winner: ${winner}`;
     }
-    return `Game Status: ${isHumanNext ? PLAYER_HUMAN : PLAYER_AI}`;
+    return `Next player: ${isHumanNext ? PLAYER_HUMAN : PLAYER_AI}`;
   }, [winner, isHumanNext]);
 
   return (
     <>
       <div className="flex flex-col items-center justify-center">
-        <p className="text-center bg-gray-400 w-44 p-2 mb-3 rounded-lg text-white font-bold text-xl">
+        {/* Display the game status or winner message */}
+        <p className="p-2 mb-3 text-xl font-bold text-center text-white bg-gray-400 rounded-lg w-44">
           {getStatusMessage}
         </p>
-        <div className="grid grid-cols-3">
+
+        {/* Game board */}
+        <div className="grid grid-cols-3 gap-2">
           {board.map((value, index) => (
             <button
               key={index}
-              className="border-4 border-cyan-500 hover:bg-gray-300 h-[90px] w-[90px] rounded-lg m-2 text-3xl font-bold"
+              className="w-24 h-24 text-3xl font-bold border-4 rounded-lg border-cyan-500 hover:bg-gray-300"
               onClick={() => handleClick(index)}
+              aria-label={`Cell ${index}`}
             >
               {value}
             </button>
           ))}
         </div>
+
+        {/* Restart game button */}
         {winner && (
           <button
             onClick={restartGame}
-            className="bg-red-500 hover:bg-red-800 rounded-lg m-2 p-2 text-xl text-white"
+            className="p-2 mt-3 text-xl text-white bg-red-500 rounded-lg hover:bg-red-700"
           >
             Restart Game
           </button>
