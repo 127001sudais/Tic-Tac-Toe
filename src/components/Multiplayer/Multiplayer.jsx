@@ -34,15 +34,21 @@ const Multiplayer = ({ conn }) => {
       }
     };
 
+    const handleConnectionClose = () => {
+      setGameStatus("⚠️⚠️ Opponent disconnected.");
+      setGameOver(true);
+      console.log("Opponent disconnected");
+    };
+
     if (conn) {
       conn.on("data", handleReceiveMove);
-      conn.on("close", () => console.log("Connection has been closed."));
+      conn.on("close", handleConnectionClose);
     }
 
     return () => {
       if (conn) {
         conn.off("data", handleReceiveMove);
-        conn.off("close");
+        conn.off("close", handleConnectionClose);
       }
     };
   }, [conn, board, gameOver]);
