@@ -19,11 +19,11 @@ const MultiplayerUI = ({
     </div>
     {gameOver && (
       <>
-        <p className="bg-gray-400 w-44 p-2 m-2 rounded-lg text-white font-bold text-xl text-center">
+        <p className="p-2 m-2 text-xl font-bold text-center text-white bg-gray-400 rounded-lg w-44">
           {gameStatus}
         </p>
         <button
-          className="bg-red-500 w-44 p-2 m-2 text-white rounded-lg font-bold text-xl"
+          className="p-2 m-2 text-xl font-bold text-white bg-red-500 rounded-lg w-44"
           onClick={resetGame}
         >
           Reset Game
