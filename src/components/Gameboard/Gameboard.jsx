@@ -2,7 +2,6 @@ import { useCallback, useEffect, useMemo } from "react";
 import {
   PLAYER_HUMAN,
   PLAYER_AI,
-  TIE,
   initialBoard,
 } from "../../constants/initialBoard";
 import { checkForWinner } from "../../hooks/useGameLogic";
@@ -45,8 +44,5 @@ export const useTicTacToeLogic = () => {
     winner,
     handleClick,
     restartGame,
-    TIE,
-    PLAYER_AI,
-    PLAYER_HUMAN,
   };
 };

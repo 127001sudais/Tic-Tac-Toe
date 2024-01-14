@@ -1,16 +1,10 @@
 import { useTicTacToeLogic } from "./Gameboard";
 import { useMemo } from "react";
+import { TIE, PLAYER_AI, PLAYER_HUMAN } from "../../constants/initialBoard";
+
 const TicTacToe = () => {
-  const {
-    board,
-    isHumanNext,
-    winner,
-    handleClick,
-    restartGame,
-    TIE,
-    PLAYER_AI,
-    PLAYER_HUMAN,
-  } = useTicTacToeLogic();
+  const { board, isHumanNext, winner, handleClick, restartGame } =
+    useTicTacToeLogic();
 
   const getStatusMessage = useMemo(() => {
     if (winner) {
