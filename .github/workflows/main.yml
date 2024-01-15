@@ -34,12 +34,19 @@ jobs:
           CI: false
         run: npm run build
 
-      - name: Run Cypress tests
+      - name: Run Cypress E2E tests
         uses: cypress-io/github-action@v2
         with:
+          command: npx cypress run --e2e
           start: npm start
           wait-on: "http://localhost:3000"
           wait-on-timeout: 60
+
+      - name: Run Cypress Component tests
+        uses: cypress-io/github-action@v2
+        with:
+          command: npx cypress run --component
+          start: npm start # Only if you need to start a server for component tests
 
       - name: Deploy to GitHub Pages
         if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}
