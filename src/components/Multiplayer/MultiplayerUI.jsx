@@ -36,10 +36,11 @@ const MultiplayerUI = ({
       {gameStatus}
     </p>
 
-    <div className="grid grid-cols-3 gap-2">
+    <div data-testid="game-board" className="grid grid-cols-3 gap-2">
       {board.map((value, index) => (
         <Cell
           key={`cell-${index}`}
+          data-testid={`cell-${index}`}
           value={value}
           onClick={() => makeMove(index)}
           isClickable={!gameOver && isMyTurn}
