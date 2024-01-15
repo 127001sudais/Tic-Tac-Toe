@@ -16,14 +16,14 @@ const Multiplayer = ({ conn }) => {
   const [isXNext, setIsXNext] = useState(true);
   const [gameOver, setGameOver] = useState(false);
   const [gameStatus, setGameStatus] = useState("Player X's turn");
+  const [isMyTurn, setIsMyTurn] = useState(true);
 
-  // Function to reset the game to its initial state.
   const resetGame = () => {
     if (gameOver && conn) {
       setBoard(Array(9).fill(null));
       setIsXNext(true);
       setGameOver(false);
-      setGameStatus("Player X's turn");
+      setGameStatus("Player X turn");
       conn.send({ type: "reset" });
     }
   };
@@ -31,6 +31,18 @@ const Multiplayer = ({ conn }) => {
   // Effect hook to set up event listeners for receiving data and handling disconnection.
   useEffect(() => {
     const handleReceiveMove = (data) => {
+      console.log("Received data:", data);
+      if (data.type === "assign-symbol") {
+        setIsXNext(data.symbol === "X");
+      }
+
+      if (data.type === "move") {
+        if (!isMyTurn) {
+          updateBoard(data.position, data.value);
+          setIsMyTurn(true);
+        }
+      }
+
       if (data.type === "reset") {
         resetGame();
         return;
@@ -76,7 +88,7 @@ const Multiplayer = ({ conn }) => {
       setGameOver(true);
       setGameStatus("It's a draw!");
     } else {
-      setGameStatus(`Player ${isXNext ? "O" : "X"}'s turn`);
+      setGameStatus(`Player ${isXNext ? "O" : "X"} turn`);
     }
   };
 
@@ -96,13 +108,14 @@ const Multiplayer = ({ conn }) => {
 
   // Function to handle making a move on the board.
   const makeMove = (position) => {
-    if (board[position] || gameOver) return;
+    if (!isMyTurn || board[position] || gameOver) return;
     const nextValue = isXNext ? "X" : "O";
     updateBoard(position, nextValue);
+    setIsMyTurn(false); // After making a move, it's the other player's turn
 
     // Send the move to the other player.
     if (conn) {
-      conn.send({ position, value: nextValue });
+      conn.send({ type: "move", position, value: nextValue });
     }
   };
 
@@ -113,6 +126,7 @@ const Multiplayer = ({ conn }) => {
       gameOver={gameOver}
       gameStatus={gameStatus}
       resetGame={resetGame}
+      isMyTurn={isMyTurn}
     />
   );
 };

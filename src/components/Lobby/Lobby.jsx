@@ -36,6 +36,7 @@ const MLobby = () => {
     setInGame(true);
     setConn(connection);
     setupConnectionEventHandlers(connection);
+    connection.send({ type: "assign-symbol", symbol: "O" }); // Host always X, so peer is O.
   };
 
   // Sets up event handlers for a peer connection
@@ -76,6 +77,7 @@ const MLobby = () => {
     if (connection) {
       setInGame(true);
       setConn(connection);
+      connection.send({ type: "assign-symbol", symbol: "X" }); // Host always X.
     }
   };
 
