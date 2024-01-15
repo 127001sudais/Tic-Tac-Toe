@@ -6,5 +6,5 @@
 pages.
 4. Share public github repository as submission. 
 Optional bonus points.
-5. Allow users to select PvP or PvC (randomized moves is fine) game mode.
-6. Record previous games’ history.
+5. Allow users to select PvP or PvC (randomized moves is fine) game mode. ✅
+6. Record previous games history.

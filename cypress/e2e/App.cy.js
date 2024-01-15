@@ -1,7 +1,7 @@
 describe("TicTacToe and MLobby App", () => {
   beforeEach(() => {
     // Start from the index page
-    cy.visit("http://localhost:3000");
+    cy.visit("https://127001sudais.github.io/Tic-Tac-Toe/");
   });
 
   it("renders navigation tabs", () => {
@@ -16,6 +16,6 @@ describe("TicTacToe and MLobby App", () => {
   });
 
   it("displays the TicTacToe component by default", () => {
-    cy.get(".window main").should("contain", "Game Status:");
+    cy.get(".window main").should("contain", "Next move:");
   });
 });
