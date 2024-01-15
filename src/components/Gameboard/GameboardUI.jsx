@@ -6,23 +6,22 @@ const TicTacToe = () => {
   const { board, isHumanNext, winner, handleClick, restartGame } =
     useTicTacToeLogic();
 
-  // Memoized status message to avoid unnecessary recalculations.
-  const getStatusMessage = useMemo(() => {
+  const statusMessage = useMemo(() => {
     if (winner) {
       return winner === TIE ? "It's a tie!" : `Winner: ${winner}`;
     }
-    return `Next player: ${isHumanNext ? PLAYER_HUMAN : PLAYER_AI}`;
+    return `Next move: ${isHumanNext ? PLAYER_HUMAN : PLAYER_AI}`;
   }, [winner, isHumanNext]);
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center">
-        {/* Display the game status or winner message */}
-        <p className="p-2 mb-3 text-xl font-bold text-center text-white bg-gray-400 rounded-lg w-44">
-          {getStatusMessage}
+      <div className="relative flex flex-col items-center justify-center">
+        {/* Status Message */}
+        <p className="p-2 mb-4 text-3xl font-bold text-center text-white bg-gray-400 rounded-lg">
+          {statusMessage}
         </p>
 
-        {/* Game board */}
+        {/* Game Board */}
         <div className="grid grid-cols-3 gap-2">
           {board.map((value, index) => (
             <button
@@ -36,11 +35,11 @@ const TicTacToe = () => {
           ))}
         </div>
 
-        {/* Restart game button */}
+        {/* Restart Game Button */}
         {winner && (
           <button
             onClick={restartGame}
-            className="p-2 mt-3 text-xl text-white bg-red-500 rounded-lg hover:bg-red-700"
+            className="absolute p-2 mt-3 text-xl text-white bg-red-500 rounded-lg top-96 hover:bg-red-700"
           >
             Restart Game
           </button>
