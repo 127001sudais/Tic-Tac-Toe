@@ -17,7 +17,10 @@ const TicTacToe = () => {
     <>
       <div className="relative flex flex-col items-center justify-center">
         {/* Status Message */}
-        <p className="p-2 mb-4 text-3xl font-bold text-center text-white bg-gray-400 rounded-lg">
+        <p
+          data-testid="status-message"
+          className="p-2 mb-4 text-3xl font-bold text-center text-white bg-gray-400 rounded-lg status-message"
+        >
           {statusMessage}
         </p>
 
@@ -25,6 +28,7 @@ const TicTacToe = () => {
         <div className="grid grid-cols-3 gap-2">
           {board.map((value, index) => (
             <button
+              data-testid={`cell-${index}`}
               key={index}
               className="w-24 h-24 text-3xl font-bold border-4 rounded-lg border-cyan-500 hover:bg-gray-300"
               onClick={() => handleClick(index)}
@@ -38,6 +42,7 @@ const TicTacToe = () => {
         {/* Restart Game Button */}
         {winner && (
           <button
+            data-testid="restart-button"
             onClick={restartGame}
             className="absolute p-2 mt-3 text-xl text-white bg-red-500 rounded-lg top-96 hover:bg-red-700"
           >
