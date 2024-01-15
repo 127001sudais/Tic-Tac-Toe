@@ -64,7 +64,6 @@ const Multiplayer = ({ conn }) => {
       conn.on("close", handleConnectionClose);
     }
 
-    // Cleanup function to remove event listeners.
     return () => {
       if (conn) {
         conn.off("data", handleReceiveMove);

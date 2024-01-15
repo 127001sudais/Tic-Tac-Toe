@@ -2,7 +2,6 @@ import React from "react";
 import { mount } from "@cypress/react18";
 import App from "../../src/App";
 
-// Start your test suite
 describe("App", () => {
   it("renders the navigation and main content", () => {
     mount(<App />);

@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-// Cell component for individual cells of the game board
 const Cell = ({ value, onClick, isClickable }) => (
   <button
     type="button"
@@ -15,14 +14,12 @@ const Cell = ({ value, onClick, isClickable }) => (
   </button>
 );
 
-// Define PropTypes for Cell to ensure proper usage
 Cell.propTypes = {
   value: PropTypes.string,
   onClick: PropTypes.func.isRequired,
   isClickable: PropTypes.bool.isRequired,
 };
 
-// MultiplayerUI component for the game interface
 const MultiplayerUI = ({
   board,
   makeMove,
@@ -59,7 +56,6 @@ const MultiplayerUI = ({
   </div>
 );
 
-// Define PropTypes for MultiplayerUI to ensure proper usage
 MultiplayerUI.propTypes = {
   board: PropTypes.arrayOf(PropTypes.string).isRequired,
   makeMove: PropTypes.func.isRequired,

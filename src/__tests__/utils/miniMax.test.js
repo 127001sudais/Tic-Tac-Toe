@@ -77,8 +77,7 @@ describe("minimax", () => {
       null,
       null,
     ];
-    checkForWinner.mockReturnValue(null); // No winner yet
-    // Assume that the best move for AI is to place at index 0
+    checkForWinner.mockReturnValue(null);
     const result = minimax(board, PLAYER_AI);
     expect(result).toEqual({ index: 0, score: 1 });
   });

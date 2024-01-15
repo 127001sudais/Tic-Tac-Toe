@@ -15,7 +15,7 @@ describe("<TicTacToe />", () => {
     mockHandleClick.mockClear();
 
     useTicTacToeLogic.mockReturnValue({
-      board: Array(9).fill(null), // empty board
+      board: Array(9).fill(null),
       isHumanNext: true,
       winner: null,
       handleClick: mockHandleClick,
@@ -28,7 +28,6 @@ describe("<TicTacToe />", () => {
     expect(screen.getByTestId("status-message")).toHaveTextContent(
       "Next move: X"
     );
-    // Check if all cells are rendered
     for (let i = 0; i < 9; i++) {
       expect(screen.getByTestId(`cell-${i}`)).toBeInTheDocument();
     }

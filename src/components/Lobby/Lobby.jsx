@@ -26,7 +26,6 @@ const MLobby = () => {
       handleError
     );
 
-    // Cleanup function to close the peer connection when the component unmounts
     return () => closePeerConnection(peerInstance);
   }, []);
 
@@ -36,10 +35,9 @@ const MLobby = () => {
     setInGame(true);
     setConn(connection);
     setupConnectionEventHandlers(connection);
-    connection.send({ type: "assign-symbol", symbol: "O" }); // Host always X, so peer is O.
+    connection.send({ type: "assign-symbol", symbol: "O" });
   };
 
-  // Sets up event handlers for a peer connection
   const setupConnectionEventHandlers = (connection) => {
     connection
       .on("data", handleReceivedData)
@@ -47,7 +45,6 @@ const MLobby = () => {
       .on("error", handleError);
   };
 
-  // Handles errors by logging and setting an error message
   const handleError = (err) => {
     console.error("Peer error", err);
     setError(getFriendlyErrorMessage(err));
@@ -77,7 +74,7 @@ const MLobby = () => {
     if (connection) {
       setInGame(true);
       setConn(connection);
-      connection.send({ type: "assign-symbol", symbol: "X" }); // Host always X.
+      connection.send({ type: "assign-symbol", symbol: "X" });
     }
   };
 

@@ -1,4 +1,3 @@
-// Constants that are shared across multiple modules
 export const initialBoard = Array(9).fill(null);
 // Constants for players
 export const PLAYER_HUMAN = "X";
