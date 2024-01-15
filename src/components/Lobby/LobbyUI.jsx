@@ -13,8 +13,11 @@ const LobbyUI = ({
   <div className="relative flex flex-col items-center justify-center">
     {/* User's Peer ID Display */}
     <div className="flex items-center p-2 m-2 text-white bg-gray-400 rounded-lg">
-      <p className="flex-grow">Your ID: {formatPeerId(peerId)}</p>
+      <p data-testid="your-id" className="flex-grow">
+        Your ID: {formatPeerId(peerId)}
+      </p>
       <button
+        data-testid="copy-peer-id"
         className="ml-2 hover:text-black"
         onClick={() => navigator.clipboard.writeText(peerId)}
         aria-label="Copy peer ID"
@@ -25,6 +28,7 @@ const LobbyUI = ({
 
     {/* Input for Friend's Peer ID */}
     <input
+      data-testid="input-peer-id"
       type="text"
       value={friendPeerId}
       onChange={(e) => setFriendPeerId(e.target.value)}
@@ -35,6 +39,7 @@ const LobbyUI = ({
 
     {/* Connect Button */}
     <button
+      data-testid="connect-peer"
       onClick={handleConnectToPeer}
       className="p-2 m-2 text-white bg-green-400 rounded-lg hover:bg-green-600"
     >
@@ -44,7 +49,10 @@ const LobbyUI = ({
     {/* Error Message */}
     {error && (
       <div className="absolute transform w-72 top-44 ">
-        <p className="p-2 text-white bg-red-500 rounded-lg">
+        <p
+          data-testid="error-message"
+          className="p-2 text-white bg-red-500 rounded-lg"
+        >
           ⚠️ Error: {error}
         </p>
       </div>

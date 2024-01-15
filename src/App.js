@@ -14,7 +14,7 @@ export default function App() {
 
   return (
     <div className="window">
-      <nav>
+      <nav data-testid="app-navigation">
         <ul>
           {tabs.map((item) => (
             <li
@@ -30,7 +30,7 @@ export default function App() {
           ))}
         </ul>
       </nav>
-      <main>
+      <main data-testid="app-main">
         <AnimatePresence mode="wait">
           <motion.div
             key={selectedTab ? selectedTab.label : "empty"}
