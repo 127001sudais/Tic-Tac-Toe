@@ -19,7 +19,7 @@ const TicTacToe = () => {
         {/* Status Message */}
         <p
           data-testid="status-message"
-          className="p-2 mb-4 text-3xl font-bold text-center text-white bg-gray-400 rounded-lg status-message"
+          className="p-2 mb-4 text-3xl font-bold text-center text-white bg-gray-400 rounded-lg"
         >
           {statusMessage}
         </p>
