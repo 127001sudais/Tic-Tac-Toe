@@ -15,9 +15,10 @@ export default function App() {
   return (
     <div className="window">
       <nav data-testid="app-navigation">
-        <ul>
+        <ul data-testid="nav-ul">
           {tabs.map((item) => (
             <li
+              data-testid="nav-ul-li"
               key={item.label}
               className={item === selectedTab ? "selected" : ""}
               onClick={() => setSelectedTab(item)}
