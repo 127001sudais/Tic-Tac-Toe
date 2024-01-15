@@ -18,8 +18,11 @@ jobs:
         with:
           node-version: "18.18.0"
 
+      - name: Clear npm cache
+        run: npm cache clean --force
+
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Run Jest and React Testing Library tests
         run: npm test
@@ -49,7 +52,7 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           command: npx cypress run --component
-          start: npm start # Only if you need to start a server for component tests
+          start: npm start
 
       - name: Deploy to GitHub Pages
         if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}

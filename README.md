@@ -1,4 +1,4 @@
-# App Navigation Guide
+# Tic Tac Toe
 
 This project is hosted on GitHub Pages. To view the live application, please [click here](https://127001sudais.github.io/Tic-Tac-Toe/).
 
